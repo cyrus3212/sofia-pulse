@@ -36,6 +36,14 @@ router.post('/save', (req, res) => {
 });
 
 
+router.delete('/site/:id', (req, res) => {
+    const id = req.params.id;
+
+    Site.findByIdAndDelete(id).then((response) => {
+        res.status(200).json({ msg: 'Successfully deleted Site.' });
+    });
+});
+
 router.get('/name', (req, res) => {
     const data =  {
         username: 'peterson',
@@ -43,7 +51,6 @@ router.get('/name', (req, res) => {
     };
     res.json(data);
 });
-
 
 
 module.exports = router;

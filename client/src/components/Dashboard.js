@@ -8,6 +8,8 @@ const Dashboard = () => {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [posts, setPosts] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     getBlogPost();
@@ -28,6 +30,13 @@ const Dashboard = () => {
 
   const submit = (event) => {
     event.preventDefault();
+    setIsError(false);
+    setIsSuccess(false);
+
+    if (!name || !url) {
+        setIsError(true);
+        return;
+    }
 
     const payload = {
       name: name,
@@ -41,13 +50,28 @@ const Dashboard = () => {
     })
       .then(() => {
         console.log('Data has been sent to the server');
+        getBlogPost();
+        setIsSuccess(true);
         setName('');
         setUrl('');
       })
       .catch(() => {
         console.log('Internal server error');
-      });;
+      });
   };
+
+  const deleteSite = (id) => {
+    axios({
+        url: `api/site/${id}`,
+        method: 'DELETE'
+    }).then((res) => {
+        getBlogPost();
+        alert('Site deleted successfuly');
+    })
+    .catch(() => {
+        console.log('Internal server error');
+    });
+  }
 
   const displayPosts = () => {
 
@@ -57,7 +81,7 @@ const Dashboard = () => {
       <tr key={index}>
         <td>{post.name}</td>
         <td>{post.url}</td>
-        <td><button>Delete</button></td>
+        <td><button onClick={() => deleteSite(post._id)}>Delete</button></td>
       </tr>
     ));
   };
@@ -85,6 +109,9 @@ const Dashboard = () => {
                     onChange={e => setUrl(e.target.value)}
                 />
                 </div>
+
+                { isError && <div className="text-error">*Name and URL are required</div> }
+                { isSuccess && <div className="text-success">Successfully added site.</div> }
 
                 <button>Add</button>
             </form>
