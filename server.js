@@ -11,7 +11,7 @@ const routes = require('./routes/api');
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // Step 2
-mongoose.connect('mongodb://localhost/sofia', {
+mongoose.connect(MONGODB_URI || 'mongodb://localhost/sofia', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
