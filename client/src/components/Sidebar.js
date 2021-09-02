@@ -2,7 +2,10 @@ import React from 'react';
 import '../App.css';
 import logo from '../images/logo.png'
 
-const Sidebar = ({ isPublic = false }) => {
+const Sidebar = ({ filter, filters = [], isPublic = false, onFliter }) => {
+    const filtersDisplay = filters.map(a => {
+        return <li className={a === filter ? 'active' : ''} onClick={() => onFliter(a)}>{a}</li>
+    })
     return (
         <div className="sidebar">
             <div className="logo-container">
@@ -15,7 +18,7 @@ const Sidebar = ({ isPublic = false }) => {
                     </ul>
                     :
                     <ul>
-                        <li>Home</li>
+                        {filtersDisplay}
                     </ul>
                 }
             </div>

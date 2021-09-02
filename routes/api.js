@@ -1,7 +1,5 @@
 const express = require('express');
-
 const router = express.Router();
-
 const Site = require('../models/site');
 
 
@@ -30,7 +28,7 @@ router.post('/save', (req, res) => {
         }
         // Site
         return res.json({
-            msg: 'Your data has been saved!!!!!!'
+            msg: 'Your data has been saved!'
         });
     });
 });
@@ -44,13 +42,12 @@ router.delete('/site/:id', (req, res) => {
     });
 });
 
-router.get('/name', (req, res) => {
-    const data =  {
-        username: 'peterson',
-        age: 5
-    };
-    res.json(data);
-});
-
+// router.get('/name', (req, res) => {
+//     const data =  {
+//         username: 'peterson',
+//         age: 5
+//     };
+//     res.json(data);
+// });
 
 module.exports = router;

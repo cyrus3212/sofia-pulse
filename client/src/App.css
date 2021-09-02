@@ -11,7 +11,7 @@ form {
   margin: 10px 0px;
 }
 
-.form-input input, .form-input textarea {
+.form-input input, .form-input textarea, select {
   width: 100%;
   font-size: 1rem;
   line-height: 1.5;
@@ -36,13 +36,14 @@ button {
 .post__display {
   border: 1px solid lightgrey;
   margin: 5px 0px;
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 10px;
-  display: inline-block;
   margin-right: 30px;
   margin-bottom: 30px;
-  width: 28%;
+  width: 200px;
+  height: 300px;
   position: relative;
+  float: left;
 }
 
 input {
@@ -56,6 +57,11 @@ input {
   background-color: #ffffff;
   border: 1px solid #eaeafa;
   border-radius: 14px !important;
+}
+
+select, button {
+  border-radius: 14px !important;
+  min-width: 100px;
 }
 
 button, a {
@@ -86,7 +92,13 @@ button, a {
 
 .sidebar ul li{
   padding: 20px;
-  background: #e1e1f0;
+  background: rgba(225, 225, 240, 0.3);
+}
+
+.sidebar ul li:hover,
+.sidebar ul li.active {
+  background: rgba(225, 225, 240, 1);
+  cursor: pointer;
 }
 
 .content {
@@ -149,10 +161,14 @@ table tr td:last-child {
 
 .view-demo-button {
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
+  width: 90px;
+  text-decoration: none !important;
+  color: white !important;
+  width: 130px;
 }
 
 .post__display:hover .post-overlay,

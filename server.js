@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 8080; // Step 1
 
 const routes = require('./routes/api');
+const authRoute = require('./routes/auth');
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // Step 2
@@ -33,9 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // HTTP request logger
 app.use(morgan('tiny'));
+app.use('/auth', authRoute);
 app.use('/api', routes);
-
-
-
 
 app.listen(PORT, console.log(`Server is starting at ${PORT}`));

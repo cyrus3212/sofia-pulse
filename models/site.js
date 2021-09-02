@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const SiteSchema = new Schema({
     name: String,
-    url: String
+    url: String,
+    category: String
 });
 
 // Model
