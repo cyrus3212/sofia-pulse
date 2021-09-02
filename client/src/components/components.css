@@ -41,6 +41,11 @@
 }
 
 @media (max-width: 768px) {
+    .logo-container {
+        width: 260px !important;
+        padding: 20px !important;
+    }
+
     .b-menu {
         display: inline-block !important;
     }
