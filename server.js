@@ -3,15 +3,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
+require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 8080; // Step 1
+const PORT = process.env.PORT || 8080;
 
 const routes = require('./routes/api');
 const authRoute = require('./routes/auth');
 const MONGODB_URI = process.env.MONGODB_URI;
 
-// Step 2
 mongoose.connect(MONGODB_URI || 'mongodb://localhost/sofia', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -25,12 +25,10 @@ mongoose.connection.on('connected', () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Step 3
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }
-
 
 // HTTP request logger
 app.use(morgan('tiny'));

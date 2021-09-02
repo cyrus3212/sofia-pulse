@@ -1,22 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const Site = require('../models/site');
-
+const { verifyAccessToken } = require('../helpers/jwt_helper');
 
 // Routes
 router.get('/', (req, res) => {
 
     Site.find({  })
         .then((data) => {
-            console.log('Data: ', data);
+            res.json(data);
+        })
+        .catch((error) => {});
+});
+
+// Routes
+router.get('/sites', verifyAccessToken, (req, res) => {
+
+    Site.find({  })
+        .then((data) => {
             res.json(data);
         })
         .catch((error) => {
-            console.log('error: ', daerrorta);
+            res.json({ message: error });
+            console.log('error: ', error);
         });
 });
 
-router.post('/save', (req, res) => {
+router.post('/save', verifyAccessToken, (req, res) => {
     const data = req.body;
 
     const newSite = new Site(data);
@@ -41,13 +51,5 @@ router.delete('/site/:id', (req, res) => {
         res.status(200).json({ msg: 'Successfully deleted Site.' });
     });
 });
-
-// router.get('/name', (req, res) => {
-//     const data =  {
-//         username: 'peterson',
-//         age: 5
-//     };
-//     res.json(data);
-// });
 
 module.exports = router;

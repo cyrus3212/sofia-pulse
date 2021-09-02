@@ -3,6 +3,7 @@ import axios from 'axios';
 import Sidebar from './Sidebar';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import '../App.css';
+import { Redirect } from "react-router";
 
 const Dashboard = () => {
   const [name, setName] = useState('');
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSessionExpired, setIsSessionExpired] = useState(false);
   const filters = ['Format', 'Product', 'Feature'];
 
   useEffect(() => {
@@ -18,11 +20,20 @@ const Dashboard = () => {
   }, []);
 
   const getBlogPost = () => {
-    axios.get('/api').then((response) => {
+    const token = localStorage.getItem('token');
+    axios.get('/api/sites', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((response) => {
       const data = response.data;
       setPosts(data);
-    }).catch(() => {
-      alert('Error retrieving data. Please refresh the page.');
+    }).catch((err) => {
+      alert('Session expired');
+      if (err) {
+        localStorage.removeItem('token');
+        setIsSessionExpired(true)
+      }
     });
   }
 
@@ -66,6 +77,10 @@ const Dashboard = () => {
       </tr>
     ));
   };
+
+  if (isSessionExpired) {
+    return <Redirect to="/login" />
+  }
 
   return(
     <div>

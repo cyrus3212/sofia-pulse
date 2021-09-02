@@ -84,6 +84,7 @@ button, a {
   position: fixed;
   top: 0;
   box-shadow: -1px 0px 10px #ccc;
+  transition: all 0.75s ease;
 }
 
 .sidebar ul {
@@ -107,6 +108,7 @@ button, a {
   width: calc(100% - 300px);
   margin-left: 300px;
   padding: 40px; 
+  transition: all 0.75s ease;
 }
 
 .logo-container {
@@ -182,4 +184,17 @@ table tr td:last-child {
 
 .text-success {
   color: #1f9112;
+}
+
+.login-container {
+  max-width: 380px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-container form,
+.login-container button {
+  width: 100%;
 }

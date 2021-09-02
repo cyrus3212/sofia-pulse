@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt =  require('jsonwebtoken');
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 const register = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, function(err, hashedPass) {
@@ -34,7 +35,7 @@ const login = (req, res, next) => {
                 }
 
                 if (result) {
-                    let token = jwt.sign({ username: user.username}, 'verySecretValue', {expiresIn: '1h'});
+                    let token = jwt.sign({ username: user.username}, ACCESS_TOKEN_SECRET, {expiresIn: '10h'});
                     res.json({ status: 200, message: 'Login Successful', token })
                 } else {
                     res.json({ status: 402, message: 'Password is incorrect'})

@@ -8,6 +8,7 @@ const App = () => {
   const [filter, setFilter] = useState('All');
   const [postsOriginal, setPostsOriginal] = useState([]);
   const filters = ['All', 'Format', 'Product', 'Feature'];
+  const [isShowSideNav, onToggleSideNav] = useState(false);
 
   useEffect(() => {
     getBlogPost();
@@ -27,6 +28,7 @@ const App = () => {
 
   const onChangeFilter = (e) => {
     setFilter(e);
+    onToggleSideNav(false);
 
     if (e !== 'All') {
       const filteredPosts = postsOriginal.filter(post => post.category === e);
@@ -41,7 +43,7 @@ const App = () => {
     if (!posts.length) return null;
 
     return posts.map((post, index) => {
-        const url = post.url.replace('https:','') || post.url.replace('http:','');
+      const url = post.url.replace('https:','') || post.url.replace('http:','');
         return (
             <div key={index} className="post__display">
               <iframe src={url} height="200px" width="100%" title={post.name}></iframe>
@@ -54,8 +56,14 @@ const App = () => {
   };
 
   return(
-   <div>
-       <Sidebar filter={filter} filters={filters} isPublic={true} onFliter={(event) => onChangeFilter(event)}/>
+   <div className={isShowSideNav ? 'open': ''}>
+       <Sidebar 
+        filter={filter} 
+        filters={filters} 
+        isPublic={true} 
+        onFliter={(event) => onChangeFilter(event)}
+        onToggleSideNav={() => onToggleSideNav(!isShowSideNav)}
+      />
        <div className="content">{displayPosts()}</div>
    </div>
   );
